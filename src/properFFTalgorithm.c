@@ -301,7 +301,7 @@ void increaseNumberOfChannels(struct AllChannelData *allChannelData, int64_t new
     if (allChannelData->maxNumberOfChannelsEver >= newNumberOfChannels) return;
     struct ChannelData **oldChannelDataArray = allChannelData->channelDataArray;
     struct ChannelData **newChannelDataArray = malloc(newNumberOfChannels * sizeof(struct ChannelData*));
-    memcpy(allChannelData->channelDataArray, newChannelDataArray, sizeof(struct ChannelData*) * allChannelData->maxNumberOfChannelsEver);
+    memcpy(newChannelDataArray, allChannelData->channelDataArray, sizeof(struct ChannelData*) * allChannelData->maxNumberOfChannelsEver);
     allChannelData->channelDataArray = newChannelDataArray;
     
     for (int64_t i = allChannelData->maxNumberOfChannelsEver; i < newNumberOfChannels; i++)
@@ -362,7 +362,7 @@ void* threadFunction(void* arg)
     
     // printf("sizeof(pthread_t) = %lld\n", sizeof(pthread_t));
     
-    struct AllChannelData allChannelData;
+    struct AllChannelData allChannelData = {0};
     allChannelData.numberOfChannels = 0;
     allChannelData.maxNumberOfChannelsEver = 0;
     
